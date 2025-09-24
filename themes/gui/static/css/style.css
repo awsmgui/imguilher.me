@@ -1,22 +1,42 @@
+/* =============================================================== */
+/* NOVO: Impede que o layout "pule" quando a barra de rolagem aparece */
+/* =============================================================== */
+html {
+    scrollbar-gutter: stable;
+}
+
 :root {
     /* Paleta de cores outonal */
     --bg-color: #F2A341; 
     --nav-button-bg: #593202;
-    
-    /* Fundo dos cards com 70% de opacidade inicial */
     --post-card-bg: rgba(217, 114, 24, 0.7); 
-
     --text-color: #593202; 
-    --text-on-dark-color: #FDF6E3; /* Cor creme para textos */
+    --text-on-dark-color: #FDF6E3; 
     --primary-accent: #8C3503;
     --border-color: #A6896F; 
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Roboto', sans-serif; line-height: 1.6; }
+
+body { 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+    font-family: 'Roboto', sans-serif; 
+    line-height: 1.6; 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 h1, h2, h3, h4, h5, h6 { font-family: 'Jersey 10', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; }
 a { color: var(--text-color); text-decoration: none; transition: all 0.2s ease-in-out; }
-main { max-width: 900px; margin: 2rem auto 4rem auto; padding: 0 1.5rem; }
+
+main { 
+    max-width: 900px; 
+    margin: 2rem auto 4rem auto; 
+    padding: 0 1.5rem; 
+    flex-grow: 1;
+}
 
 /* CABEÇALHO GLOBAL */
 .site-header {
@@ -104,7 +124,6 @@ main { max-width: 900px; margin: 2rem auto 4rem auto; padding: 0 1.5rem; }
     margin-bottom: 2rem;
 }
 .post-grid { text-align: left; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
-
 .post-card { 
     background-color: var(--post-card-bg); 
     border: 1px solid var(--border-color); 
@@ -115,7 +134,7 @@ main { max-width: 900px; margin: 2rem auto 4rem auto; padding: 0 1.5rem; }
 .post-card:hover { 
     transform: translateY(-5px); 
     border-color: var(--primary-accent);
-    background-color: rgba(217, 114, 24, 0.5); /* Laranja com 50% de opacidade */
+    background-color: rgba(217, 114, 24, 0.5);
 }
 
 .post-card .card-content { padding: 1.2rem; }
