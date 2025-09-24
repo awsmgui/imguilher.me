@@ -1,0 +1,65 @@
+# Nome do seu workflow. Aparecerá na aba "Actions" do seu repositório no GitHub.
+name: Deploy Hugo site to Pages
+
+# Gatilho: define quando a automação deve rodar.
+on:
+  # Roda quando você envia (push) código para o branch 'main'.
+  push:
+    branches:
+      - main
+  # Permite que você rode este workflow manualmente a partir da aba Actions.
+  workflow_dispatch:
+
+# Configura as permissões que o GitHub Actions terá para publicar o site.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Define o que acontece quando o site é construído, para evitar múltiplas publicações ao mesmo tempo.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+# Os "trabalhos" (jobs) que a automação irá executar.
+jobs:
+  # O único trabalho que temos é o de "deploy" (publicação).
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest # Roda em uma máquina virtual Linux (Ubuntu).
+    steps:
+      # 1. Baixa o código do seu repositório.
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true  # Baixa submódulos do Git, se houver.
+          fetch-depth: 0    # Baixa todo o histórico, necessário para o Hugo.
+
+      # 2. Configura o ambiente do Hugo.
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest' # Usa a versão mais recente do Hugo.
+          extended: true # Garante que a versão "extended" seja usada.
+
+      # 3. Constrói o site estático.
+      - name: Build
+        run: hugo --minify # Roda o comando 'hugo' para gerar a pasta 'public'.
+
+      # 4. Configura a página para a publicação.
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 5. Envia os arquivos construídos para o GitHub Pages.
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Envia o conteúdo da pasta 'public'.
+          path: './public'
+
+      # 6. Publica o site no GitHub Pages.
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
