@@ -2,55 +2,27 @@
 <div class="list-page">
     <h1 class="list-title">{{ .Title }}</h1>
 
-    <div id="password-gate">
-        <p class="password-prompt">Esta página é protegida. Por favor, insira a senha para continuar:</p>
-        <form id="password-form" class="password-form">
-            <input type="password" id="password-input" class="password-input" autofocus>
-            <button type="submit" class="password-submit">Acessar</button>
-        </form>
-        <p id="error-message" class="error-message" style="display:none;">Senha incorreta.</p>
-    </div>
-
-    <div id="secret-content" style="display:none;">
-        <div id="feed-container">
-            <p class="loading-message">Carregando notícias...</p>
-        </div>
+    <div id="feed-container">
+        <p class="loading-message">Carregando notícias...</p>
     </div>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const passwordGate = document.getElementById('password-gate');
-        const passwordForm = document.getElementById('password-form');
-        const passwordInput = document.getElementById('password-input');
-        const errorMessage = document.getElementById('error-message');
-        const secretContent = document.getElementById('secret-content');
-
-        // MUDE SUA SENHA SECRETA AQUI
-        const secretPassword = "sua_senha_super_secreta";
-
-        passwordForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (passwordInput.value === secretPassword) {
-                passwordGate.style.display = 'none';
-                secretContent.style.display = 'block';
-                fetchFeeds();
-            } else {
-                errorMessage.style.display = 'block';
-                passwordInput.value = '';
-            }
-        });
-
         const feedContainer = document.getElementById("feed-container");
-        // MUDE OS FEEDS RSS AQUI
+
+        // Sua lista de feeds de Bug Bounty
         const rssFeeds = [
-            "https://g1.globo.com/rss/g1/tecnologia/",
-            "https://rss.tecmundo.com.br/feed"
+            "https://pentester.land/writeups.atom",
+            "https://hackerone.com/hacktivity/overview?format=atom",
+            "https://blog.intigriti.com/feed/"
         ];
 
+        // Função para buscar e exibir os feeds (nenhuma mudança aqui dentro)
         async function fetchFeeds() {
             let allItems = [];
             const proxyUrl = "https://api.rss2json.com/v1/api.json?rss_url=";
+
             for (const url of rssFeeds) {
                 try {
                     const response = await fetch(proxyUrl + encodeURIComponent(url));
@@ -59,12 +31,15 @@
                         data.items.forEach(item => item.feedTitle = data.feed.title);
                         allItems.push(...data.items);
                     }
-                } catch (error) { console.error("Falha ao buscar o feed:", url, error); }
+                } catch (error) {
+                    console.error("Falha ao buscar o feed:", url, error);
+                }
             }
             allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
             displayItems(allItems);
         }
 
+        // Função para mostrar os itens no HTML (nenhuma mudança aqui dentro)
         function displayItems(items) {
             if (items.length === 0) {
                 feedContainer.innerHTML = "<p>Não foi possível carregar as notícias no momento.</p>";
@@ -78,6 +53,9 @@
             });
             feedContainer.innerHTML = html;
         }
+
+        // MUDANÇA: Agora chamamos a função diretamente, sem verificar senha
+        fetchFeeds();
     });
 </script>
 {{ end }}
