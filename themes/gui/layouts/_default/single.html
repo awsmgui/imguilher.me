@@ -1,13 +1,69 @@
 {{ define "main" }}
-<article class="post-single">
-    <header class="post-header">
-        <h1>{{ .Title }}</h1>
-        {{ if eq .Type "posts" }}
-        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 de January de 2006" }}</time>
-        {{ end }}
-    </header>
-    <div class="post-content">
-        {{ .Content }}
+
+  {{/* O Hugo verifica se a página tem o parâmetro 'is_news_page: true' */}}
+  {{ if .Params.is_news_page }}
+
+    <div class="list-page">
+        <h1 class="list-title">{{ .Title }}</h1>
+        <div id="feed-container">
+            <p class="loading-message">Carregando notícias...</p>
+        </div>
     </div>
-</article>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const feedContainer = document.getElementById("feed-container");
+            const rssFeeds = [
+                "https://pentester.land/writeups.atom",
+                "https://hackerone.com/hacktivity/overview?format=atom",
+                "https://blog.intigriti.com/feed/"
+            ];
+            async function fetchFeeds() {
+                let allItems = [];
+                const proxyUrl = "https://api.rss2json.com/v1/api.json?rss_url=";
+                for (const url of rssFeeds) {
+                    try {
+                        const response = await fetch(proxyUrl + encodeURIComponent(url));
+                        const data = await response.json();
+                        if (data.status === 'ok') {
+                            data.items.forEach(item => item.feedTitle = data.feed.title);
+                            allItems.push(...data.items);
+                        }
+                    } catch (error) { console.error("Falha ao buscar o feed:", url, error); }
+                }
+                allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+                displayItems(allItems);
+            }
+            function displayItems(items) {
+                if (items.length === 0) {
+                    feedContainer.innerHTML = "<p>Não foi possível carregar as notícias no momento.</p>";
+                    return;
+                }
+                let html = "";
+                items.forEach(item => {
+                    const pubDate = new Date(item.pubDate).toLocaleDateString('pt-BR');
+                    const description = new DOMParser().parseFromString(item.description, 'text/html').body.textContent || "";
+                    html += `<article class="feed-item"><h3 class="feed-item-title"><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3><p class="feed-item-meta">Por <strong>${item.author || item.feedTitle}</strong> em ${pubDate}</p><p class="feed-item-description">${description.substring(0, 150)}...</p></article>`;
+                });
+                feedContainer.innerHTML = html;
+            }
+            fetchFeeds();
+        });
+    </script>
+
+  {{ else }}
+
+    <article class="post-single">
+        <header class="post-header">
+            <h1>{{ .Title }}</h1>
+            {{ if eq .Type "posts" }}
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 de January de 2006" }}</time>
+            {{ end }}
+        </header>
+        <div class="post-content">
+            {{ .Content }}
+        </div>
+    </article>
+
+  {{ end }}
+
 {{ end }}
