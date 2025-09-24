@@ -4,14 +4,16 @@ date: 2025-09-24T10:07:38-03:00
 draft: false
 ---
 
-Gostou do conteúdo? Encontrou algo interessante, tem uma sugestão ou quer simplesmente trocar uma ideia sobre cybersegurança e tecnologia?
+### Vamos Conectar?
 
-### Abaixo estão as melhores formas de me encontrar.
+Gostou do conteúdo? Encontrou algo interessante, tem uma sugestão ou quer simplesmente trocar uma ideia sobre cibersegurança e tecnologia? Ficarei feliz em ouvir você!
 
-* **LinkedIn:** Para conexões profissionais.
-    * [LinkedIn](https://linkedin.com/in/guilhermeferraz2)
+Abaixo estão os melhores canais para me encontrar:
 
-* **Twitter (X):** Onde compartilho pensamentos rápidos e retuíto conteúdo de segurança.
-    * [Twitter](https://x.com/frzgui)
+* **[LinkedIn](https://linkedin.com/in/guilhermeferraz2)** 💼
+    * Ideal para conexões profissionais, networking e discussões aprofundadas sobre a área.
 
-Para propostas de colaboração, projetos ou assuntos estritamente profissionais, o linkedin é o canal preferencial.
+* **[Twitter (X)](https://x.com/frzgui)** 🐦
+    * Onde compartilho insights rápidos, retuíto notícias e participo de conversas sobre o dia a dia da cybersegurança.
+
+> **Para propostas de colaboração, projetos ou assuntos estritamente profissionais, o LinkedIn é o canal preferencial.**
