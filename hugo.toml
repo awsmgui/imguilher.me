@@ -1,0 +1,7 @@
+baseURL = "https://example.org/"
+languageCode = "pt-br"
+title = "guilher.me"
+theme = "gui"
+
+[params]
+  subtitle = "security"

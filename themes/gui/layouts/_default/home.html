@@ -1,0 +1,26 @@
+{{ define "main" }}
+<div class="latest-posts-container">
+    <div class="latest-posts-header">
+        <h2>Últimos Posts</h2>
+    </div>
+
+    <div class="post-grid">
+        {{ $pages := where .Site.RegularPages "Type" "posts" }}
+        {{ range first 4 $pages.ByDate.Reverse }}
+            <a href="{{ .Permalink }}" class="post-card">
+                <article>
+                    <div class="card-content">
+                        <h2>{{ .Title }}</h2>
+                        <p>{{ .Summary }}</p>
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 de January de 2006" }}</time>
+                    </div>
+                </article>
+            </a>
+        {{ end }}
+    </div>
+
+    <div class="all-posts-link-container">
+        <a href="/posts/" class="all-posts-button">Ver todos os posts</a>
+    </div>
+</div>
+{{ end }}

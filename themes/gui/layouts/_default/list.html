@@ -1,0 +1,19 @@
+{{ define "main" }}
+<div class="list-page">
+    <h1 class="list-title">{{ .Title }}</h1>
+    
+    <div class="post-grid">
+        {{ range .Paginator.Pages }}
+            <a href="{{ .Permalink }}" class="post-card">
+                <article>
+                    <div class="card-content">
+                        <h2>{{ .Title }}</h2>
+                        <p>{{ .Summary }}</p>
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 de January de 2006" }}</time>
+                    </div>
+                </article>
+            </a>
+        {{ end }}
+    </div>
+</div>
+{{ end }}
