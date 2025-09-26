@@ -14,6 +14,16 @@
 </head>
 <body>
     
+    <svg style="position: absolute; width: 0; height: 0;" viewBox="0 0 0 0">
+      <filter id="glass-distortion">
+        <feTurbulence type="fractalNoise" baseFrequency="0.01 0.05" numOctaves="5" seed="0" result="f1"></feTurbulence>
+        <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" in2="f1" scale="50" result="displacement"></feDisplacementMap>
+        <feGaussianBlur in="displacement" stdDeviation="5" result="blur"></feGaussianBlur>
+        <feSpecularLighting surfaceScale="10" specularConstant="1" specularExponent="20" lightingColor="#FFF" in="blur" result="specularLighting"></feSpecularLighting>
+        <feComposite in="specularLighting" in2="displacement" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="composite"></feComposite>
+        <feComposite in="SourceGraphic" in2="composite" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"></feComposite>
+      </filter>
+    </svg>
     <header class="site-header">
         <a href="{{ "/" | relURL }}">
             <h1 class="site-title">{{ .Site.Title }}</h1>
