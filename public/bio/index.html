@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
-<head>
+<html lang="pt-br">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    <title>Bio | guilher.me</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{ "/css/style.css" | relURL }}">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
@@ -26,8 +26,8 @@
 
     <header class="site-header">
         <div class="header-container">
-            <a href="{{ "/" | relURL }}"><h1 class="site-title">{{ .Site.Title }}</h1></a>
-            <p class="site-subtitle">{{ .Site.Params.subtitle }}</p>
+            <a href="/"><h1 class="site-title">guilher.me</h1></a>
+            <p class="site-subtitle">security</p>
 
             <div class="button-panel">
                 <div class="button-row">
@@ -89,11 +89,43 @@
     </header>
 
     <main>
-        {{ block "main" . }}{{ end }}
+        
+
+  
+  
+
+    <article class="post-single">
+        <header class="post-header">
+            <h1>Bio</h1>
+            
+        </header>
+        <div class="post-content">
+            <p><strong>Olá, eu sou o Guilherme.</strong></p>
+<p>Navegando pelo complexo ecossistema da tecnologia, meu foco sempre se voltou para o ponto onde a inovação e a segurança se encontram. Sou um entusiasta e profissional da área de segurança da informação, com um interesse especial em <em>web hacking</em>, <em>bug bounty</em> e em entender como as coisas funcionam&hellip; <strong>e como podem ser quebradas.</strong></p>
+<h3 id="sobre-o-blog">Sobre o Blog</h3>
+<p>Este blog é meu diário de bordo digital, um espaço para:</p>
+<ul>
+<li>Documentar minhas pesquisas</li>
+<li>Compartilhar vulnerabilidades que encontrei</li>
+<li>Criar tutoriais</li>
+<li>Explorar novas ferramentas</li>
+</ul>
+<blockquote>
+<p>Acredito que o conhecimento em segurança deve ser compartilhado para fortalecer a comunidade e a tecnologia como um todo.</p>
+</blockquote>
+<p>O conteúdo que você encontrará aqui é um reflexo direto dos meus estudos e da minha paixão por resolver quebra-cabeças digitais.</p>
+<p>Sinta-se à vontade para <strong>explorar os artigos</strong> e <strong>conectar-se</strong>.</p>
+
+        </div>
+    </article>
+
+  
+
+
     </main>
 
     <footer class="main-footer">
-        <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}. Todos os direitos reservados.</p>
+        <p>&copy; 2025 guilher.me. Todos os direitos reservados.</p>
     </footer>
 </body>
 </html>

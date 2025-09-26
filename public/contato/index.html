@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
-<head>
+<html lang="pt-br">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    <title>Contato | guilher.me</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{ "/css/style.css" | relURL }}">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
@@ -26,8 +26,8 @@
 
     <header class="site-header">
         <div class="header-container">
-            <a href="{{ "/" | relURL }}"><h1 class="site-title">{{ .Site.Title }}</h1></a>
-            <p class="site-subtitle">{{ .Site.Params.subtitle }}</p>
+            <a href="/"><h1 class="site-title">guilher.me</h1></a>
+            <p class="site-subtitle">security</p>
 
             <div class="button-panel">
                 <div class="button-row">
@@ -89,11 +89,48 @@
     </header>
 
     <main>
-        {{ block "main" . }}{{ end }}
+        
+
+  
+  
+
+    <article class="post-single">
+        <header class="post-header">
+            <h1>Contato</h1>
+            
+        </header>
+        <div class="post-content">
+            <h3 id="vamos-conectar">Vamos Conectar?</h3>
+<p>Gostou do conteúdo? Encontrou algo interessante, tem uma sugestão ou quer simplesmente trocar uma ideia sobre cibersegurança e tecnologia? Ficarei feliz em ouvir você!</p>
+<p>Abaixo estão os melhores canais para me encontrar:</p>
+<ul>
+<li>
+<p><strong><a href="https://linkedin.com/in/guilhermeferraz2">LinkedIn</a></strong> 💼</p>
+<ul>
+<li>Ideal para conexões profissionais, networking e discussões aprofundadas sobre a área.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://x.com/frzgui">Twitter (X)</a></strong> 🐦</p>
+<ul>
+<li>Onde compartilho insights rápidos, retuíto notícias e participo de conversas sobre o dia a dia da cybersegurança.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>Para propostas de colaboração, projetos ou assuntos estritamente profissionais, o LinkedIn é o canal preferencial.</strong></p>
+</blockquote>
+
+        </div>
+    </article>
+
+  
+
+
     </main>
 
     <footer class="main-footer">
-        <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}. Todos os direitos reservados.</p>
+        <p>&copy; 2025 guilher.me. Todos os direitos reservados.</p>
     </footer>
 </body>
 </html>

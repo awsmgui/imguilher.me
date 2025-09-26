@@ -1,4 +1,5 @@
 {{ define "main" }}
+
 <div class="latest-posts-container">
     <div class="latest-posts-header">
         <h2>Últimos Posts</h2>
@@ -20,7 +21,17 @@
     </div>
 
     <div class="all-posts-link-container">
-        <a href="/posts/" class="all-posts-button">Ver todos os posts</a>
+        <a href="/posts/">
+            <div class="liquidGlass-wrapper liquidGlass-wrapper-full">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-content">
+                    <span>Ver Todos os Posts</span>
+                </div>
+            </div>
+        </a>
     </div>
+
 </div>
+
 {{ end }}
