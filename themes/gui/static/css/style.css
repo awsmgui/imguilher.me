@@ -46,7 +46,7 @@ main {
 .site-subtitle { font-family: 'Roboto', sans-serif; text-transform: uppercase; letter-spacing: 2px; font-size: 1rem; color: var(--text-color); opacity: 0.8; margin-bottom: 1.5rem; }
 
 /* =============================================================== */
-/* BOTÕES DE NAVEGAÇÃO - ESTILO "LIQUID GLASS" AVANÇADO            */
+/* BOTÕES DE NAVEGAÇÃO - ESTILO "LIQUID GLASS" CORRETO             */
 /* =============================================================== */
 .button-panel { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
 .button-row { display: flex; justify-content: center; gap: 1rem; }
@@ -54,11 +54,10 @@ main {
 .liquidGlass-wrapper.nav-button {
     position: relative;
     display: flex;
-    font-weight: 600;
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5); /* Efeito de 'pulo' suavizado */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5);
     border-radius: 28px;
     width: 180px;
     height: 110px;
@@ -70,43 +69,44 @@ main {
 
 .liquidGlass-effect {
     position: absolute;
-    z-index: 0;
+    z-index: 1; /* Camada do efeito de vidro */
     inset: 0;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     filter: url(#glass-distortion);
     overflow: hidden;
     isolation: isolate;
+    border-radius: 28px; /* Borda precisa estar aqui também */
 }
 
 .liquidGlass-tint {
-    z-index: 1;
+    z-index: 2; /* Camada do brilho colorido */
     position: absolute;
     inset: 0;
-    /* Usando cores da nossa paleta para o brilho */
     background: radial-gradient(circle at 30% 10%, var(--primary-accent) 0%, transparent 50%),
                 radial-gradient(circle at 70% 90%, var(--secondary-accent) 0%, transparent 50%);
     background-size: 150% 150%;
-    opacity: 0.25;
-    transition: transform 0.8s ease;
+    opacity: 0.2;
+    transition: transform 0.8s ease, opacity 0.5s ease;
 }
 
 .liquidGlass-wrapper.nav-button:hover .liquidGlass-tint {
     transform: scale(1.2);
-    opacity: 0.4;
+    opacity: 0.3;
 }
 
 .liquidGlass-shine {
     position: absolute;
     inset: 0;
-    z-index: 2;
+    z-index: 3; /* Camada do brilho da borda */
     overflow: hidden;
-    box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.2),
-                inset -1px -1px 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.1),
+                inset -1px -1px 1px 0 rgba(255, 255, 255, 0.05);
     border-radius: 28px;
 }
 
 .liquidGlass-content {
-    z-index: 3;
+    z-index: 4; /* Conteúdo fica por cima de tudo */
     color: var(--text-on-dark-color);
     display: flex;
     flex-direction: column;
@@ -117,13 +117,19 @@ main {
     font-size: 1.2rem;
     text-transform: uppercase;
     width: 100%;
+    transition: all 0.3s ease;
 }
 
 .liquidGlass-content i {
     font-size: 1.8rem;
+    transition: all 0.3s ease;
 }
 
-/* SEÇÃO DE POSTS (Mantida como antes para consistência) */
+.liquidGlass-wrapper.nav-button:hover .liquidGlass-content {
+    color: var(--primary-accent); /* Acento no texto e ícone no hover */
+}
+
+/* SEÇÃO DE POSTS (Mantida com o design de cantos arredondados) */
 .latest-posts-container { margin-top: 1rem; }
 .latest-posts-header { text-align: center; font-size: 2rem; color: var(--primary-accent); margin-bottom: 2rem; }
 .post-grid { text-align: left; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
