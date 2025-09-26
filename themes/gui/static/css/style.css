@@ -10,33 +10,110 @@ html {
     --primary-accent: #ffcc00;
     --border-color: #4a008c;
     --secondary-accent: #a020f0;
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.15);
+    --button-glass-bg: rgba(255, 255, 255, 0.08);
+    --button-glass-border: rgba(255, 255, 255, 0.15);
+    --button-hover-bg: rgba(255, 255, 255, 0.15);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Roboto', sans-serif; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+
+body { 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+    font-family: 'Roboto', sans-serif; 
+    line-height: 1.6; 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 h1, h2, h3, h4, h5, h6 { font-family: 'Jersey 10', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; }
 a { color: var(--text-color); text-decoration: none; transition: all 0.2s ease-in-out; }
 a:hover { color: var(--primary-accent); }
-main { max-width: 900px; margin: 0 auto 4rem auto; padding: 3rem 1.5rem 0 1.5rem; flex-grow: 1; border-top: 2px solid var(--border-color); }
+
+/* A 'coluna' invisível que alinha tudo */
+.header-container, main {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+main { 
+    margin-bottom: 4rem;
+    padding-top: 3rem;
+    flex-grow: 1;
+    border-top: 2px solid var(--border-color);
+}
 
 /* CABEÇALHO GLOBAL */
-.site-header { text-align: center; padding: 1rem 1.5rem 3rem 1.5rem; }
-.site-title { font-size: 3.5rem; color: var(--text-color); margin-bottom: 0rem; line-height: 1; }
-.site-title:hover { color: var(--primary-accent); }
-.site-subtitle { font-family: 'Roboto', sans-serif; text-transform: uppercase; letter-spacing: 2px; font-size: 1rem; color: var(--text-color); opacity: 0.8; margin-bottom: 1.5rem; }
+.site-header {
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom: 3rem;
+}
+
+.site-title { 
+    font-size: 3.5rem; 
+    color: var(--text-color); 
+    margin-bottom: 0rem;
+    line-height: 1;
+}
+.site-title:hover {
+    color: var(--primary-accent);
+}
+
+.site-subtitle {
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+}
 
 /* BOTÕES DE NAVEGAÇÃO */
-.button-panel { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
-.button-row { display: flex; justify-content: center; gap: 1rem; }
-.nav-button {
-    background: var(--glass-bg);
+.button-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Container que segura o fundo e o botão */
+.button-container {
+    position: relative;
+    width: 180px;
+    height: 120px; /* Altura fixa para consistência */
+}
+
+/* O fundo do vidro (o elemento que será distorcido) */
+.button-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
+    filter: url(#glass-distortion);
+    transition: transform 0.3s ease;
+}
+
+/* O botão em si (conteúdo) */
+.nav-button {
+    background: transparent;
+    border: 1px solid var(--button-glass-border);
     border-radius: 28px;
-    padding: 1rem 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,77 +122,52 @@ main { max-width: 900px; margin: 0 auto 4rem auto; padding: 3rem 1.5rem 0 1.5rem
     font-family: 'Jersey 10', sans-serif;
     font-size: 1.2rem;
     text-transform: uppercase;
-    width: 180px;
+    width: 100%;
+    height: 100%;
     color: var(--text-on-dark-color);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
-    overflow: hidden;
-    filter: url(#glass-distortion); /* Aplica o filtro SVG */
+    z-index: 2;
 }
-.nav-button:hover { border-color: rgba(255, 204, 0, 0.5); transform: scale(1.05) translateY(-5px); box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45); }
-.nav-button span, .nav-button i { z-index: 2; } /* Garante que o texto fique nítido */
-.nav-button i { font-size: 1.8rem; color: var(--text-on-dark-color); }
-.button-container:hover .nav-button i, .button-container:hover .nav-button span { color: var(--primary-accent); }
+
+.button-container:hover .button-background {
+    transform: scale(1.1);
+}
+
+.button-container:hover .nav-button {
+    border-color: rgba(255, 204, 0, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-button span, .nav-button i {
+    transition: color 0.3s ease;
+}
+
+.nav-button i { 
+    font-size: 1.8rem;
+    color: var(--text-on-dark-color); 
+}
+
+.button-container:hover .nav-button i,
+.button-container:hover .nav-button span {
+    color: var(--primary-accent);
+}
 
 /* SEÇÃO DE POSTS */
 .latest-posts-container { margin-top: 1rem; }
 .latest-posts-header { text-align: center; font-size: 2rem; color: var(--primary-accent); margin-bottom: 2rem; }
 .post-grid { text-align: left; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
-
-/* NOVO ESTILO PARA OS CARDS DE POST */
-.post-card { 
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 28px; /* Mesma borda dos botões */
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-    overflow: hidden; /* Garante que o conteúdo respeite a borda */
-}
-.post-card:hover { 
-    transform: translateY(-5px); 
-    border-color: rgba(255, 204, 0, 0.5);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-}
-.post-card .card-content { padding: 1.5rem; } /* Aumentado um pouco o padding */
+.post-card { background-color: var(--post-card-bg); border: 1px solid var(--border-color); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%); transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+.post-card:hover { transform: translateY(-5px); border-color: var(--primary-accent); background-color: rgba(74, 0, 140, 0.9); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+.post-card .card-content { padding: 1.2rem; }
 .post-card .card-content h2 { color: var(--text-on-dark-color); font-size: 1.6rem; margin-bottom: 0.5rem; }
 .post-card:hover h2 { color: var(--primary-accent); }
 .post-card .card-content p { color: var(--text-on-dark-color); opacity: 0.9; font-size: 0.9rem; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .post-card time { font-size: 0.8rem; color: var(--text-on-dark-color); opacity: 0.7; }
 
-/* BOTÃO 'VER TODOS' */
-.all-posts-link-container { text-align: center; margin-top: 3rem; }
-.all-posts-button {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 28px;
-    display: inline-block;
-    color: var(--text-on-dark-color);
-    font-family: 'Jersey 10', sans-serif;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    padding: 0.5rem 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    transition: all 0.3s ease;
-}
-.all-posts-button:hover { color: var(--primary-accent); border-color: rgba(255, 204, 0, 0.5); transform: translateY(-4px); }
-
 /* OUTROS ESTILOS */
 .list-title { font-size: 3.5rem; color: var(--primary-accent); text-align: center; margin-bottom: 2rem; text-shadow: 0 0 10px rgba(255,204,0,0.5); }
-.post-single { background-color: rgba(74, 0, 140, 0.5); padding: 2rem; border: 1px solid var(--border-color); border-radius: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+.post-single { background-color: rgba(74, 0, 140, 0.5); padding: 2rem; border: 1px solid var(--border-color); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 .post-single h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 1rem; color: var(--primary-accent); }
 .main-footer { text-align: center; padding: 2rem 1.5rem; margin-top: 4rem; color: var(--border-color); font-size: 0.9rem; }
-
-/* ESTILOS PARA A PÁGINA DE FEED RSS (NEWS) */
-#feed-container { background-color: rgba(74, 0, 140, 0.5); border: 1px solid var(--border-color); padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-radius: 28px; }
-.loading-message { text-align: center; font-size: 1.2rem; color: var(--text-on-dark-color); }
-.feed-item { background-color: rgba(0,0,0,0.2); border: 1px solid var(--border-color); padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 20px; }
-.feed-item:last-child { margin-bottom: 0; }
-.feed-item-title a { font-family: 'Jersey 10', sans-serif; font-size: 2rem; color: var(--text-on-dark-color); }
-.feed-item-title a:hover { color: var(--primary-accent); }
-.feed-item-meta { font-size: 0.9rem; color: var(--border-color); margin-bottom: 1rem; }
-.feed-item-description { color: var(--text-on-dark-color); font-size: 1rem; opacity: 0.9; }
