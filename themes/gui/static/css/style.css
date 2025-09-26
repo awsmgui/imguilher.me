@@ -10,6 +10,9 @@ html {
     --primary-accent: #ffcc00; /* Amarelo/Laranja para o brilho */
     --border-color: #4a008c;
     --secondary-accent: #a020f0; /* Roxo para o brilho */
+    --button-glass-bg: rgba(255, 255, 255, 0.08); /* Fundo sutil de vidro */
+    --button-glass-border: rgba(255, 255, 255, 0.15); /* Borda sutil de vidro */
+    --button-hover-bg: rgba(255, 255, 255, 0.15); /* Fundo de vidro no hover */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -79,11 +82,10 @@ main {
 }
 
 .nav-button {
-    /* CORREÇÃO AQUI: Fundo mais sutil, e o FILTRO SVG é aplicado */
-    background: rgba(255, 255, 255, 0.08); /* Fundo quase transparente para o efeito de vidro */
+    background: var(--button-glass-bg); /* Fundo quase transparente para o efeito de vidro */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--button-glass-border);
     border-radius: 28px;
     padding: 1rem 1.5rem;
     display: flex;
@@ -98,56 +100,46 @@ main {
     color: var(--text-on-dark-color);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    position: relative;
-    overflow: hidden;
-    
-    /* AQUI A MÁGICA: APLICA O FILTRO SVG */
-    filter: url(#glass-distortion);
+    position: relative; /* Essencial para posicionar o "líquido" */
+    overflow: hidden;   /* Esconde o "líquido" que sai da borda */
+    isolation: isolate; /* Garante que o backdrop-filter funcione bem */
 }
 
-/* Os "líquidos" coloridos */
-.nav-button::before, .nav-button::after {
+/* O novo elemento "líquido" */
+.nav-button .liquid-effect {
     content: '';
     position: absolute;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    filter: blur(80px); /* Desfoque intenso para criar o brilho */
-    opacity: 0.7;
-    transition: all 0.5s ease;
-    z-index: 1; /* Garante que o brilho está por trás do conteúdo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradient com as cores do hacking club para o efeito */
+    background: radial-gradient(circle at 30% 10%, var(--primary-accent) 0%, transparent 40%),
+                radial-gradient(circle at 70% 90%, var(--secondary-accent) 0%, transparent 40%);
+    background-size: 100% 100%; /* Ajuste inicial */
+    filter: url(#glass-distortion); /* AQUI A MÁGICA: APLICA O FILTRO SVG SOMENTE NESTE ELEMENTO */
+    opacity: 0.8;
+    z-index: 1; /* Por baixo do texto e ícone */
+    transition: transform 0.8s ease;
 }
 
-.nav-button::before {
-    background: var(--primary-accent); /* Amarelo */
-    top: -50px;
-    left: -100px;
-}
-
-.nav-button::after {
-    background: var(--secondary-accent); /* Roxo */
-    bottom: -80px;
-    right: -100px;
-}
 
 /* Efeito de hover */
 .nav-button:hover { 
-    border-color: rgba(255, 204, 0, 0.5);
+    border-color: var(--primary-accent);
     transform: scale(1.05) translateY(-5px);
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
-    /* Mantém a cor de fundo transparente no hover, ou ajusta se quiser mais opaco */
-    background: rgba(255, 255, 255, 0.15); 
+    background: var(--button-hover-bg); 
 }
 
-.nav-button:hover::before {
-    transform: scale(1.2) translate(20px, -20px);
-}
-.nav-button:hover::after {
-    transform: scale(1.2) translate(-20px, 20px);
+/* Movimenta o "líquido" no hover */
+.nav-button:hover .liquid-effect {
+    transform: scale(1.1) translate(10px, -10px); /* Movimento sutil */
+    opacity: 1;
 }
 
 /* O conteúdo do botão precisa ficar na frente do brilho */
-.nav-button span, .nav-button i {
+.nav-button span:not(.liquid-effect), .nav-button i {
     position: relative;
     z-index: 2; /* Conteúdo na frente */
     color: var(--text-on-dark-color);
@@ -158,7 +150,7 @@ main {
     font-size: 1.8rem;
 }
 
-.nav-button:hover span, .nav-button:hover i {
+.nav-button:hover span:not(.liquid-effect), .nav-button:hover i {
     color: #fff; /* Texto mais brilhante no hover */
 }
 
@@ -197,11 +189,10 @@ main {
 /* BOTÃO 'VER TODOS' */
 .all-posts-link-container { text-align: center; margin-top: 3rem; }
 .all-posts-button {
-    /* Mesmos estilos dos nav-buttons para consistência */
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--button-glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--button-glass-border);
     border-radius: 28px;
     display: inline-block;
     color: var(--text-on-dark-color);
@@ -209,43 +200,40 @@ main {
     font-size: 1.5rem;
     text-transform: uppercase;
     padding: 0.5rem 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
     overflow: hidden;
-    filter: url(#glass-distortion); /* Aplica o filtro SVG também */
+    isolation: isolate;
 }
 
-.all-posts-button::before, .all-posts-button::after {
+/* O novo elemento "líquido" para o botão "Ver Todos" */
+.all-posts-button .liquid-effect {
     content: '';
     position: absolute;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.7;
-    transition: all 0.5s ease;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 10%, var(--primary-accent) 0%, transparent 40%),
+                radial-gradient(circle at 70% 90%, var(--secondary-accent) 0%, transparent 40%);
+    background-size: 100% 100%;
+    filter: url(#glass-distortion);
+    opacity: 0.8;
     z-index: 1;
-}
-
-.all-posts-button::before {
-    background: var(--primary-accent);
-    top: -50px;
-    left: -100px;
-}
-
-.all-posts-button::after {
-    background: var(--secondary-accent);
-    bottom: -80px;
-    right: -100px;
+    transition: transform 0.8s ease;
 }
 
 .all-posts-button:hover { 
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--primary-accent);
-    border-color: rgba(255, 204, 0, 0.5);
+    border-color: var(--primary-accent);
     transform: scale(1.05) translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+    background: var(--button-hover-bg);
+}
+
+.all-posts-button:hover .liquid-effect {
+    transform: scale(1.1) translate(10px, -10px);
+    opacity: 1;
 }
 
 /* OUTROS ESTILOS */
@@ -290,7 +278,7 @@ main {
     color: var(--text-on-dark-color); 
 }
 .feed-item { 
-    background-color: rgba(74, 0, 140, 0.7);
+    background-color: var(--post-card-bg);
     border: 1px solid var(--border-color); 
     padding: 1.5rem; 
     margin-bottom: 1.5rem;
@@ -316,4 +304,39 @@ main {
     color: var(--text-on-dark-color); 
     font-size: 1rem; 
     opacity: 0.9; 
+}
+
+/* ESTILOS PARA O FORMULÁRIO DE SENHA (NEWS) */
+.password-prompt { 
+    text-align: center; 
+    margin-bottom: 1rem; 
+    font-size: 1.1rem; 
+}
+.password-form { 
+    display: flex; 
+    justify-content: center; 
+    gap: 0.5rem; 
+}
+.password-input { 
+    background-color: var(--text-on-dark-color); 
+    border: 1px solid var(--border-color); 
+    color: var(--bg-color); 
+    padding: 0.5rem; 
+    font-size: 1rem; 
+    width: 250px; 
+}
+.password-submit { 
+    background-color: var(--primary-accent); 
+    border: none; 
+    color: var(--bg-color); 
+    padding: 0.5rem 1rem; 
+    font-family: 'Jersey 10', sans-serif; 
+    font-size: 1.2rem; 
+    text-transform: uppercase; 
+    cursor: pointer; 
+}
+.error-message { 
+    text-align: center; 
+    color: var(--primary-accent); 
+    margin-top: 1rem; 
 }
